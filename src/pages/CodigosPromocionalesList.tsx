@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+//import axios from 'axios'
+import axios from '../api/axios';
 
 type Medico = {
   id?: string
@@ -98,7 +99,7 @@ export default function CodigosPromocionalesList() {
 
   async function fetchCodigos() {
     try {
-      const res = await axios.get('/api/codigospromocionales')
+      const res = await axios.get('/api/codigospromocionales');
       const payload = Array.isArray(res.data) ? res.data : res.data?.data ?? []
       setCodigos(payload.map(normalizeCodigo))
     } catch (err) {
