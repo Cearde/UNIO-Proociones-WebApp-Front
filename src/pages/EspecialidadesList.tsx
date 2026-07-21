@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import axios from 'axios'
-import axios from '../api/axios';
+import api from '../api/axios';
 
 type Especialidad = {
   id?: string
@@ -23,7 +23,7 @@ export default function EspecialidadesList() {
 
   async function fetchEspecialidades() {
     try {
-      const res = await axios.get('/api/especialidades')
+      const res = await api.get('/api/especialidades')
       setEspecialidades(res.data)
     } catch (err) {
       console.error(err)
@@ -50,9 +50,9 @@ export default function EspecialidadesList() {
 
     try {
       if (editingId) {
-        await axios.put(`/api/especialidades/${editingId}`, form)
+        await api.put(`/api/especialidades/${editingId}`, form)
       } else {
-        await axios.post('/api/especialidades', form)
+        await api.post('/api/especialidades', form)
       }
 
       await fetchEspecialidades()
@@ -70,7 +70,7 @@ export default function EspecialidadesList() {
     if (!window.confirm('¿Deseas desactivar esta especialidad?')) return
 
     try {
-      await axios.delete(`/api/especialidades/${id}`)
+      await api.delete(`/api/especialidades/${id}`)
       await fetchEspecialidades()
     } catch (err) {
       console.error(err)

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import axios from 'axios'
-import axios from '../api/axios';
+import api from '../api/axios';
 
 type Medico = {
   id?: string
@@ -41,7 +41,7 @@ export default function MedicosList() {
 
   async function fetchMedicos() {
     try {
-      const res = await axios.get('/api/medicos')
+      const res = await api.get('/api/medicos')
       setMedicos(res.data)
     } catch (err) {
       console.error(err)
@@ -51,7 +51,7 @@ export default function MedicosList() {
 
   async function fetchEspecialidades() {
     try {
-      const res = await axios.get('/api/especialidades')
+      const res = await api.get('/api/especialidades')
       setEspecialidades(res.data)
     } catch (err) {
       console.error(err)
@@ -89,9 +89,9 @@ export default function MedicosList() {
       }
 
       if (editingId) {
-        await axios.put(`/api/medicos/${editingId}`, payload)
+        await api.put(`/api/medicos/${editingId}`, payload)
       } else {
-        await axios.post('/api/medicos', payload)
+        await api.post('/api/medicos', payload)
       }
 
       await fetchMedicos()
@@ -109,7 +109,7 @@ export default function MedicosList() {
     if (!window.confirm('¿Deseas desactivar este médico?')) return
 
     try {
-      await axios.delete(`/api/medicos/${id}`)
+      await api.delete(`/api/medicos/${id}`)
       await fetchMedicos()
     } catch (err) {
       console.error(err)

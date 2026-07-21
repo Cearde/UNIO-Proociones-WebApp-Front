@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import axios from 'axios'
-import axios from '../api/axios';
+import api from '../api/axios';
 
 type Medico = {
   id?: string
@@ -99,7 +99,7 @@ export default function CodigosPromocionalesList() {
 
   async function fetchCodigos() {
     try {
-      const res = await axios.get('/api/codigospromocionales');
+      const res = await api.get('/api/codigospromocionales');
       const payload = Array.isArray(res.data) ? res.data : res.data?.data ?? []
       setCodigos(payload.map(normalizeCodigo))
     } catch (err) {
@@ -110,7 +110,7 @@ export default function CodigosPromocionalesList() {
 
   async function fetchMedicos() {
     try {
-      const res = await axios.get('/api/medicos')
+      const res = await api.get('/api/medicos')
       const payload = Array.isArray(res.data) ? res.data : res.data?.data ?? []
       setMedicos(payload.map(normalizeMedico))
     } catch (err) {
@@ -120,7 +120,7 @@ export default function CodigosPromocionalesList() {
 
   async function fetchMedicamentos() {
     try {
-      const res = await axios.get('/api/medicamentos')
+      const res = await api.get('/api/medicamentos')
       const payload = Array.isArray(res.data) ? res.data : res.data?.data ?? []
       setMedicamentos(payload.map(normalizeMedicamento))
     } catch (err) {
@@ -157,9 +157,9 @@ export default function CodigosPromocionalesList() {
       }
 
       if (editingId) {
-        await axios.put(`/api/codigospromocionales/${editingId}`, payload)
+        await api.put(`/api/codigospromocionales/${editingId}`, payload)
       } else {
-        await axios.post('/api/codigospromocionales', payload)
+        await api.post('/api/codigospromocionales', payload)
       }
 
       await fetchCodigos()
@@ -177,7 +177,7 @@ export default function CodigosPromocionalesList() {
     if (!window.confirm('¿Deseas eliminar este código promocional?')) return
 
     try {
-      await axios.delete(`/api/codigospromocionales/${id}`)
+      await api.delete(`/api/codigospromocionales/${id}`)
       await fetchCodigos()
     } catch (err) {
       console.error(err)

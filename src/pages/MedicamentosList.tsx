@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import axios from 'axios'
-import axios from '../api/axios';
+import api from '../api/axios';
 
 
 type Medicamento = {
@@ -31,7 +31,7 @@ export default function MedicamentosList() {
 
   async function fetchMedicamentos() {
     try {
-      const res = await axios.get('/api/medicamentos')
+      const res = await api.get('/api/medicamentos')
       const data = Array.isArray(res.data) ? res.data : []
       setMedicamentos(data)
     } catch (err) {
@@ -51,9 +51,9 @@ export default function MedicamentosList() {
     event.preventDefault()
     try {
       if (editingId) {
-        await axios.put(`/api/medicamentos/${editingId}`, form)
+        await api.put(`/api/medicamentos/${editingId}`, form)
       } else {
-        await axios.post('/api/medicamentos', form)
+        await api.post('/api/medicamentos', form)
       }
       setForm(initialForm)
       setEditingId(null)
@@ -76,7 +76,7 @@ export default function MedicamentosList() {
 
   async function handleDeactivate(id: string) {
     try {
-      await axios.delete(`/api/medicamentos/${id}`)
+      await api.delete(`/api/medicamentos/${id}`)
       fetchMedicamentos()
     } catch (err) {
       console.error(err)
